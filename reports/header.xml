@@ -1,0 +1,2067 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="enz_masar_report_modification.external_layout_seti">
+        <t t-if="o and 'branch_id' in o">
+            <t t-set="company" t-value="o.branch_id"/>
+        </t>
+        <t t-if="not o or not 'branch_id' in o">
+            <t t-set="company" t-value="company_branches"/>
+        </t>
+        <t t-if="o._name == 'sale.order'">
+            <t t-set="report_config" t-value="o.get_config_values()"/>
+            <t t-if="not report_config.get('header')">
+                <div class="header">
+                    <table style="border:1pt solid grey;width:100%;font-size:12px; margin-top:-10px;" width="100%">
+                        <!--					<link rel="stylesheet" href="/enz_dynamic_design_standard/static/src/css/style.css"/>-->
+                        <style>
+                            .font{
+                            font-family:'traditional_arabic';;font-weight:100;font-size: 13px;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiBold';
+                            src: url('/enz_dynamic_design_standard/static/src/fonts/DroidKufi-Bold.ttf')
+                            format('truetype');
+                            font-weight: bold;
+                            font-style: normal;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiRegular';
+                            src: url('/enz_dynamic_design_standard/static/src/fonts/DroidKufi-Regular.ttf')
+                            format('truetype');
+                            font-weight: normal;
+                            font-style: normal;
+                            }
+
+                            .arabic{
+                            font-family:DroidArabicKufiRegular !important;
+                            }
+
+                        </style>
+                        <tr>
+                            <td colspan="2" width="35%" style="margin-top:-15px; margin-bottom:-45px; ">
+                                <strong>
+                                    <span style="padding-left:5px;font-size:20px;" t-field="company.name"/>
+                                </strong>
+                                <br/>
+                                <t t-if="company.street">
+                                    <span style="padding-left:5px;font-size:15px;" t-field="company.street"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.street2">
+                                    <span style="padding-left:5px;font-size:15px;" t-field="company.street2"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.city">
+                                    <span style="padding-left:5px;font-size:15px;" t-field="company.city"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.country_id">
+                                    <span style="padding-left:5px;font-size:15px;" t-field="company.country_id.name"/>
+                                    <br/>
+                                </t>
+                            </td>
+                            <br/>
+                            <td colspan="3" width="30%" class="text-center">
+                                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="height: 112px;width: 200px; margin-top:5px;margin-bottom:5px;" alt="Logo"/>
+                            </td>
+
+                            <td colspan="2" width="35%" style="margin-top:-15px; margin-bottom:-45px;text-align: right;">
+                                <strong>
+                                    <span class="arabic" style="padding-left:5px;font-size:20px;text-align: right;" t-field="company.arabic_name"/>
+                                </strong>
+                                <br/>
+                                <t t-if="company.arabic_street">
+                                    <span class="text-right arabic" style="padding-left:5px;font-size:15px;" t-field="company.arabic_street"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.arabic_street2">
+                                    <span class="text-right arabic" style="padding-left:5px;font-size:15px;" t-field="company.arabic_street2"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.arabic_city">
+                                    <span class="text-right arabic" style="padding-left:5px;font-size:15px;" t-field="company.arabic_city"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.arabic_country">
+                                    <span class="text-right arabic" style="padding-left:5px;font-size:15px;" t-field="company.arabic_country"/>
+                                    <br/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="6%" style="border:1pt solid grey;">‫‪<span class="text-right" style="padding-left:5px;"/>CR No. :
+                            </td>
+                            <td width="26%" style="border:1pt solid grey;">
+                                <span class="text-center arabic" style="padding-left:60px" t-field="company.company_id.company_registry"/>
+                                ‫‪
+                            </td>
+                            <td width="17%" style="border:1pt solid grey;"><span class="text-right arabic" style="padding-left:20px;">رقم السجل
+                                التجاري</span>‬
+                            </td>
+
+                            <!--<td width="2%" style="border-bottom:1pt solid grey;border-top:1pt solid grey;border-left:0pt;border-right:0pt;"/>  -->
+
+                            <td width="18%" colspan="2" style="border:1pt solid grey;">‪
+                                <span class="text-right" style="padding-left:40px;">
+                                    VAT‬‬ No.
+                                </span>
+                            </td>
+                            <td width="16%" style="border:1pt solid grey;">
+                                <span class="text-center arabic" style="padding-left:5px" t-field="company.company_id.vat"/>
+                                ‫‪
+                            </td>
+                            <td width="17%" style="border:1pt solid grey;"><span class="text-right arabic" style="padding-left:6px;">ضريبة القيمة
+                                المضافة</span>‬
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+            <t t-else="">
+                <div class="header">
+                    <table t-if="company.sale_header" style="border:none;width:100%;font-size:12px;" width="100%">
+                        <!--					<link rel="stylesheet" href="/enz_dynamic_design_standard/static/src/css/style.css"/>-->
+                        <style>
+                            .font{
+                            font-family:'traditional_arabic';;font-weight:100;font-size: 13px;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiBold';
+                            src: url('/enz_dynamic_design_standard/static/src/fonts/DroidKufi-Bold.ttf')
+                            format('truetype');
+                            font-weight: bold;
+                            font-style: normal;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiRegular';
+                            src: url('/enz_dynamic_design_standard/static/src/fonts/DroidKufi-Regular.ttf')
+                            format('truetype');
+                            font-weight: normal;
+                            font-style: normal;
+                            }
+
+                            .arabic{
+                            font-family:DroidArabicKufiRegular !important;
+                            }
+
+                        </style>
+                        <tr>
+                            <td width="100%" style="margin-top:-15px; margin-bottom:-45px; ">
+                                <img t-att-src="image_data_uri(company.sale_header)" style="width:100%;height:80%; margin-top:5px;margin-bottom:5px;" alt="Header"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+
+            <div t-attf-style="background-image: url({{ 'data:image/png;base64,%s' % company.sale_background_image.decode('utf-8') if company.sale_background_image else '/base/static/img/bg_background_template.jpg' }});" class="article o_report_layout_standard">
+                <t t-raw="0"/>
+            </div>
+
+            <t t-if="not report_config.get('footer')">
+                <div class="footer o_background_footer">
+                    <div class="text-center" style="font-size:14px;">
+                        <ul class="list-inline">
+                            <li t-if="company.phone" class="list-inline-item">
+                                <i class="fa fa-phone" role="img" aria-label="Phone" title="Phone"/>
+                                <span t-field="company.phone"/>
+                            </li>
+                            <li t-if="company.email" class="list-inline-item">
+                                <i class="fa fa-at" role="img" aria-label="Email" title="Email"/>
+                                <span t-field="company.email"/>
+                            </li>
+                            <li t-if="company.website" class="list-inline-item">
+                                <i class="fa fa-globe" role="img" aria-label="Website" title="Website"/>
+                                <span t-field="company.website"/>
+                            </li>
+                            <!--<li t-if="company.company_id.vat" class="list-inline-item">-->
+                            <!--    <i class="fa fa-building-o" role="img" aria-label="Fiscal number"/>-->
+                            <!--    <t t-esc="(company.country_id.vat_label or 'Tax ID').replace(' ','\N{NO-BREAK SPACE}')"/>-->
+                            <!--    :-->
+                            <!--    <span t-esc="company.company_id.vat.replace(' ','\N{NO-BREAK SPACE}')"/>-->
+                            <!--</li>-->
+                        </ul>
+                        <div t-field="company.report_footer"/>
+                        <div class="row">
+                            <div class="col-10">
+                                <img t-if="company.company_id.footer_img_one" t-att-src="image_data_uri(company.company_id.footer_img_one)" style="height: 60px;width: 700px; margin-top:5px;margin-bottom:5px;padding-left:0px;" alt="Logo"/>
+                            </div>
+                            <!--<div class="col-8"/>-->
+                            <div class="col-2">
+                                <img t-if="company.footer_img" t-att-src="image_data_uri(company.footer_img)" style="height: 60px;width: 80px; margin-top:5px;margin-bottom:5px;padding-right:0px;" alt="Logo"/>
+                            </div>
+                        </div>
+                        <div t-if="report_type == 'pdf'" class="text-muted">
+                            Page:
+                            <span class="page"/>
+                            of
+                            <span class="topage"/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+            <t t-else="">
+                <div class="footer o_background_footer">
+                    <table t-if="company.sale_footer" style="border:none;width:100%;font-size:12px;" width="100%">
+                        <!--					<link rel="stylesheet" href="/enz_dynamic_design_standard/static/src/css/style.css"/>-->
+                        <style>
+                            .font{
+                            font-family:'traditional_arabic';;font-weight:100;font-size: 13px;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiBold';
+                            src: url('/enz_dynamic_design_standard/static/src/fonts/DroidKufi-Bold.ttf')
+                            format('truetype');
+                            font-weight: bold;
+                            font-style: normal;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiRegular';
+                            src: url('/enz_dynamic_design_standard/static/src/fonts/DroidKufi-Regular.ttf')
+                            format('truetype');
+                            font-weight: normal;
+                            font-style: normal;
+                            }
+
+                            .arabic{
+                            font-family:DroidArabicKufiRegular !important;
+                            }
+
+                        </style>
+                        <tr>
+                            <td width="100%" style="margin-top:-15px; margin-bottom:-45px; ">
+                                <img t-att-src="image_data_uri(company.sale_footer)" style="width:100%;height:80%; margin-top:5px;margin-bottom:5px;" alt="Footer"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </t>
+        <t t-elif="o._name == 'purchase.order'">
+            <t t-set="report_config" t-value="o.get_config_values()"/>
+            <t t-if="not report_config.get('header')">
+                <div class="header">
+                    <table style="border:1pt solid grey;width:100%;font-size:12px; margin-top:-10px;" width="100%">
+                        <!--					<link rel="stylesheet" href="/enz_dynamic_design_standard/static/src/css/style.css"/>-->
+                        <style>
+                            .font{
+                            font-family:'traditional_arabic';;font-weight:100;font-size: 13px;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiBold';
+                            src: url('/enz_dynamic_design_standard/static/src/fonts/DroidKufi-Bold.ttf')
+                            format('truetype');
+                            font-weight: bold;
+                            font-style: normal;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiRegular';
+                            src: url('/enz_dynamic_design_standard/static/src/fonts/DroidKufi-Regular.ttf')
+                            format('truetype');
+                            font-weight: normal;
+                            font-style: normal;
+                            }
+
+                            .arabic{
+                            font-family:DroidArabicKufiRegular !important;
+                            }
+
+                        </style>
+                        <tr>
+                            <td colspan="2" width="35%" style="margin-top:-15px; margin-bottom:-45px; ">
+                                <strong>
+                                    <span style="padding-left:5px;font-size:20px;" t-field="company.name"/>
+                                </strong>
+                                <br/>
+                                <t t-if="company.street">
+                                    <span style="padding-left:5px;" t-field="company.street"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.street2">
+                                    <span style="padding-left:5px;" t-field="company.street2"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.city">
+                                    <span style="padding-left:5px;" t-field="company.city"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.country_id">
+                                    <span style="padding-left:5px;" t-field="company.country_id.name"/>
+                                    <br/>
+                                </t>
+                            </td>
+                            <br/>
+                            <td colspan="3" width="30%" class="text-center">
+                                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="height: 112px;width: 200px; margin-top:5px;margin-bottom:5px;" alt="Logo"/>
+                            </td>
+
+                            <td colspan="2" width="35%" style="margin-top:-15px; margin-bottom:-45px;text-align: right;">
+                                <strong>
+                                    <span class="arabic" style="padding-left:5px;font-size:20px;text-align: right;" t-field="company.arabic_name"/>
+                                </strong>
+                                <br/>
+                                <t t-if="company.arabic_street">
+                                    <span class="text-right arabic" style="padding-left:5px;" t-field="company.arabic_street"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.arabic_street2">
+                                    <span class="text-right arabic" style="padding-left:5px;" t-field="company.arabic_street2"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.arabic_city">
+                                    <span class="text-right arabic" style="padding-left:5px;" t-field="company.arabic_city"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.arabic_country">
+                                    <span class="text-right arabic" style="padding-left:5px;" t-field="company.arabic_country"/>
+                                    <br/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="6%" style="border:1pt solid grey;">‫‪<span class="text-right" style="padding-left:5px;"/>CR No. :
+                            </td>
+                            <td width="26%" style="border:1pt solid grey;">
+                                <span class="text-center arabic" style="padding-left:60px" t-field="company.company_id.company_registry"/>
+                                ‫‪
+                            </td>
+                            <td width="17%" style="border:1pt solid grey;"><span class="text-right arabic" style="padding-left:20px;">رقم السجل
+                                التجاري</span>‬
+                            </td>
+
+                            <!--<td width="2%" style="border-bottom:1pt solid grey;border-top:1pt solid grey;border-left:0pt;border-right:0pt;"/>  -->
+
+                            <td width="18%" colspan="2" style="border:1pt solid grey;">‪
+                                <span class="text-right" style="padding-left:40px;">
+                                    VAT‬‬ No.
+                                </span>
+                            </td>
+                            <td width="16%" style="border:1pt solid grey;">
+                                <span class="text-center arabic" style="padding-left:5px" t-field="company.company_id.vat"/>
+                                ‫‪
+                            </td>
+                            <td width="17%" style="border:1pt solid grey;"><span class="text-right arabic" style="padding-left:6px;">ضريبة القيمة
+                                المضافة</span>‬
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+            <t t-else="">
+                <div class="header">
+                    <table t-if="company.purchase_header" style="border:none;width:100%;font-size:12px;" width="100%">
+                        <!--					<link rel="stylesheet" href="/enz_dynamic_design_standard/static/src/css/style.css"/>-->
+                        <style>
+                            .font{
+                            font-family:'traditional_arabic';;font-weight:100;font-size: 13px;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiBold';
+                            src: url('/enz_dynamic_design_standard/static/src/fonts/DroidKufi-Bold.ttf')
+                            format('truetype');
+                            font-weight: bold;
+                            font-style: normal;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiRegular';
+                            src: url('/enz_dynamic_design_standard/static/src/fonts/DroidKufi-Regular.ttf')
+                            format('truetype');
+                            font-weight: normal;
+                            font-style: normal;
+                            }
+
+                            .arabic{
+                            font-family:DroidArabicKufiRegular !important;
+                            }
+
+                        </style>
+                        <tr>
+                            <td width="100%" style="margin-top:-15px; margin-bottom:-45px; ">
+                                <img t-att-src="image_data_uri(company.purchase_header)" style="width:100%;height:80%; margin-top:5px;margin-bottom:5px;" alt="Header"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+
+            <div t-attf-style="background-image: url({{ 'data:image/png;base64,%s' % company.purchase_background_image.decode('utf-8') if company.purchase_background_image else '/base/static/img/bg_background_template.jpg' }});" class="article o_report_layout_standard">
+                <t t-raw="0"/>
+            </div>
+
+            <t t-if="not report_config.get('footer')">
+                <div class="footer o_background_footer">
+                    <div class="text-center" style="font-size:14px;">
+                        <ul class="list-inline">
+                            <li t-if="company.phone" class="list-inline-item">
+                                <i class="fa fa-phone" role="img" aria-label="Phone" title="Phone"/>
+                                <span t-field="company.phone"/>
+                            </li>
+                            <li t-if="company.email" class="list-inline-item">
+                                <i class="fa fa-at" role="img" aria-label="Email" title="Email"/>
+                                <span t-field="company.email"/>
+                            </li>
+                            <li t-if="company.website" class="list-inline-item">
+                                <i class="fa fa-globe" role="img" aria-label="Website" title="Website"/>
+                                <span t-field="company.website"/>
+                            </li>
+                            <li t-if="company.vat" class="list-inline-item">
+                                <i class="fa fa-building-o" role="img" aria-label="Fiscal number"/>
+                                <t t-esc="(company.country_id.vat_label or 'Tax ID').replace(' ','\N{NO-BREAK SPACE}')"/>
+                                :
+                                <span t-esc="company.vat.replace(' ','\N{NO-BREAK SPACE}')"/>
+                            </li>
+                        </ul>
+                        <div t-field="company.report_footer"/>
+                        <div t-if="report_type == 'pdf'" class="text-muted">
+                            Page:
+                            <span class="page"/>
+                            of
+                            <span class="topage"/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+            <t t-else="">
+                <div class="footer o_background_footer">
+                    <table t-if="company.purchase_footer" style="border:none;width:100%;font-size:12px;" width="100%">
+                        <!--					<link rel="stylesheet" href="/enz_dynamic_design_standard/static/src/css/style.css"/>-->
+                        <style>
+                            .font{
+                            font-family:'traditional_arabic';;font-weight:100;font-size: 13px;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiBold';
+                            src: url('/enz_dynamic_design_standard/static/src/fonts/DroidKufi-Bold.ttf')
+                            format('truetype');
+                            font-weight: bold;
+                            font-style: normal;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiRegular';
+                            src: url('/enz_dynamic_design_standard/static/src/fonts/DroidKufi-Regular.ttf')
+                            format('truetype');
+                            font-weight: normal;
+                            font-style: normal;
+                            }
+
+                            .arabic{
+                            font-family:DroidArabicKufiRegular !important;
+                            }
+
+                        </style>
+                        <tr>
+                            <td width="100%" style="margin-top:-15px; margin-bottom:-45px; ">
+                                <img t-att-src="image_data_uri(company.purchase_footer)" style="width:100%;height:80%; margin-top:5px;margin-bottom:5px;" alt="Footer"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </t>
+        <t t-elif="o._name == 'account.move'">
+            <t t-set="report_config" t-value="o.get_config_values()"/>
+            <t t-if="not report_config.get('header')">
+                <div class="header">
+                    <table style="border:1pt solid grey;width:100%;font-size:12px; margin-top:-10px;" width="100%">
+                        <!--					<link rel="stylesheet" href="/enz_dynamic_design_standard/static/src/css/style.css"/>-->
+                        <style>
+                            .font{
+                            font-family:'traditional_arabic';;font-weight:100;font-size: 13px;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiBold';
+                            src: url('/enz_dynamic_design_standard/static/src/fonts/DroidKufi-Bold.ttf')
+                            format('truetype');
+                            font-weight: bold;
+                            font-style: normal;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiRegular';
+                            src: url('/enz_dynamic_design_standard/static/src/fonts/DroidKufi-Regular.ttf')
+                            format('truetype');
+                            font-weight: normal;
+                            font-style: normal;
+                            }
+
+                            .arabic{
+                            font-family:DroidArabicKufiRegular !important;
+                            }
+
+                        </style>
+                        <tr>
+                            <td colspan="2" width="35%" style="margin-top:-15px; margin-bottom:-45px; ">
+                                <strong>
+                                    <span style="padding-left:5px;font-size:20px;" t-field="company.name"/>
+                                </strong>
+                                <br/>
+                                <t t-if="company.street">
+                                    <span style="padding-left:5px;" t-field="company.street"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.street2">
+                                    <span style="padding-left:5px;" t-field="company.street2"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.city">
+                                    <span style="padding-left:5px;" t-field="company.city"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.country_id">
+                                    <span style="padding-left:5px;" t-field="company.country_id.name"/>
+                                    <br/>
+                                </t>
+                            </td>
+                            <br/>
+                            <td colspan="3" width="30%" class="text-center">
+                                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="height: 112px;width: 200px; margin-top:5px;margin-bottom:5px;" alt="Logo"/>
+                            </td>
+
+                            <td colspan="2" width="35%" style="margin-top:-15px; margin-bottom:-45px;text-align: right;">
+                                <strong>
+                                    <span class="arabic" style="padding-left:5px;font-size:20px;text-align: right;" t-field="company.arabic_name"/>
+                                </strong>
+                                <br/>
+                                <t t-if="company.arabic_street">
+                                    <span class="text-right arabic" style="padding-left:5px;" t-field="company.arabic_street"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.arabic_street2">
+                                    <span class="text-right arabic" style="padding-left:5px;" t-field="company.arabic_street2"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.arabic_city">
+                                    <span class="text-right arabic" style="padding-left:5px;" t-field="company.arabic_city"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.arabic_country">
+                                    <span class="text-right arabic" style="padding-left:5px;" t-field="company.arabic_country"/>
+                                    <br/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="6%" style="border:1pt solid grey;">‫‪<span class="text-right" style="padding-left:5px;"/>CR No. :
+                            </td>
+                            <td width="26%" style="border:1pt solid grey;">
+                                <span class="text-center arabic" style="padding-left:60px" t-field="company.company_id.company_registry"/>
+                                ‫‪
+                            </td>
+                            <td width="17%" style="border:1pt solid grey;"><span class="text-right arabic" style="padding-left:20px;">رقم السجل
+                                التجاري</span>‬
+                            </td>
+
+                            <!--<td width="2%" style="border-bottom:1pt solid grey;border-top:1pt solid grey;border-left:0pt;border-right:0pt;"/>  -->
+
+                            <td width="18%" colspan="2" style="border:1pt solid grey;">‪
+                                <span class="text-right" style="padding-left:40px;">
+                                    VAT‬‬ No.
+                                </span>
+                            </td>
+                            <td width="16%" style="border:1pt solid grey;">
+                                <span class="text-center arabic" style="padding-left:5px" t-field="company.company_id.vat"/>
+                                ‫‪
+                            </td>
+                            <td width="17%" style="border:1pt solid grey;"><span class="text-right arabic" style="padding-left:6px;">ضريبة القيمة
+                                المضافة</span>‬
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+            <t t-else="">
+                <div class="header">
+                    <table t-if="company.invoice_header" style="border:none;width:100%;font-size:12px;" width="100%">
+                        <!--					<link rel="stylesheet" href="/enz_dynamic_design_standard/static/src/css/style.css"/>-->
+                        <style>
+                            .font{
+                            font-family:'traditional_arabic';;font-weight:100;font-size: 13px;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiBold';
+                            src: url('/enz_dynamic_design_standard/static/src/fonts/DroidKufi-Bold.ttf')
+                            format('truetype');
+                            font-weight: bold;
+                            font-style: normal;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiRegular';
+                            src: url('/enz_dynamic_design_standard/static/src/fonts/DroidKufi-Regular.ttf')
+                            format('truetype');
+                            font-weight: normal;
+                            font-style: normal;
+                            }
+
+                            .arabic{
+                            font-family:DroidArabicKufiRegular !important;
+                            }
+
+                        </style>
+                        <tr>
+                            <td width="100%" style="margin-top:-15px; margin-bottom:-45px; ">
+                                <img t-att-src="image_data_uri(company.invoice_header)" style="width:100%;height:80%; margin-top:5px;margin-bottom:5px;" alt="Header"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+
+            <div t-attf-style="background-image: url({{ 'data:image/png;base64,%s' % company.invoice_background_image.decode('utf-8') if company.invoice_background_image else '/base/static/img/bg_background_template.jpg' }});" class="article o_report_layout_standard">
+                <t t-raw="0"/>
+            </div>
+
+            <t t-if="not report_config.get('footer')">
+                <div class="footer o_background_footer">
+                    <div class="text-center" style="font-size:14px;">
+                        <ul class="list-inline">
+                            <li t-if="company.phone" class="list-inline-item">
+                                <i class="fa fa-phone" role="img" aria-label="Phone" title="Phone"/>
+                                <span t-field="company.phone"/>
+                            </li>
+                            <li t-if="company.email" class="list-inline-item">
+                                <i class="fa fa-at" role="img" aria-label="Email" title="Email"/>
+                                <span t-field="company.email"/>
+                            </li>
+                            <li t-if="company.website" class="list-inline-item">
+                                <i class="fa fa-globe" role="img" aria-label="Website" title="Website"/>
+                                <span t-field="company.website"/>
+                            </li>
+                            <li t-if="company.vat" class="list-inline-item">
+                                <i class="fa fa-building-o" role="img" aria-label="Fiscal number"/>
+                                <t t-esc="(company.country_id.vat_label or 'Tax ID').replace(' ','\N{NO-BREAK SPACE}')"/>
+                                :
+                                <span t-esc="company.vat.replace(' ','\N{NO-BREAK SPACE}')"/>
+                            </li>
+                        </ul>
+                        <div t-field="company.report_footer"/>
+                        <div t-if="report_type == 'pdf'" class="text-muted">
+                            Page:
+                            <span class="page"/>
+                            of
+                            <span class="topage"/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+            <t t-else="">
+                <div class="footer o_background_footer">
+                    <table t-if="company.invoice_footer" style="border:none;width:100%;font-size:12px;" width="100%">
+                        <!--					<link rel="stylesheet" href="/enz_dynamic_design_standard/static/src/css/style.css"/>-->
+                        <style>
+                            .font{
+                            font-family:'traditional_arabic';;font-weight:100;font-size: 13px;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiBold';
+                            src: url('/enz_dynamic_design_standard/static/src/fonts/DroidKufi-Bold.ttf')
+                            format('truetype');
+                            font-weight: bold;
+                            font-style: normal;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiRegular';
+                            src: url('/enz_dynamic_design_standard/static/src/fonts/DroidKufi-Regular.ttf')
+                            format('truetype');
+                            font-weight: normal;
+                            font-style: normal;
+                            }
+
+                            .arabic{
+                            font-family:DroidArabicKufiRegular !important;
+                            }
+
+                        </style>
+                        <tr>
+                            <td width="100%" style="margin-top:-15px; margin-bottom:-45px; ">
+                                <img t-att-src="image_data_uri(company.invoice_footer)" style="width:100%;height:80%; margin-top:5px;margin-bottom:5px;" alt="Footer"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </t>
+        <t t-elif="o._name == 'stock.picking'">
+            <t t-if="not company.delivery_header">
+                <div class="header">
+                    <table style="border:1pt solid grey;width:100%;font-size:12px; margin-top:-10px;" width="100%">
+                        <!--					<link rel="stylesheet" href="/enz_dynamic_design_standard/static/src/css/style.css"/>-->
+                        <style>
+                            .font{
+                            font-family:'traditional_arabic';;font-weight:100;font-size: 13px;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiBold';
+                            src: url('/enz_dynamic_design_standard/static/src/fonts/DroidKufi-Bold.ttf')
+                            format('truetype');
+                            font-weight: bold;
+                            font-style: normal;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiRegular';
+                            src: url('/enz_dynamic_design_standard/static/src/fonts/DroidKufi-Regular.ttf')
+                            format('truetype');
+                            font-weight: normal;
+                            font-style: normal;
+                            }
+
+                            .arabic{
+                            font-family:DroidArabicKufiRegular !important;
+                            }
+
+                        </style>
+                        <tr>
+                            <td colspan="2" width="35%" style="margin-top:-15px; margin-bottom:-45px; ">
+                                <strong>
+                                    <span style="padding-left:5px;font-size:20px;" t-field="company.name"/>
+                                </strong>
+                                <br/>
+                                <t t-if="company.street">
+                                    <span style="padding-left:5px;" t-field="company.street"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.street2">
+                                    <span style="padding-left:5px;" t-field="company.street2"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.city">
+                                    <span style="padding-left:5px;" t-field="company.city"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.country_id">
+                                    <span style="padding-left:5px;" t-field="company.country_id.name"/>
+                                    <br/>
+                                </t>
+                            </td>
+                            <br/>
+                            <td colspan="3" width="30%" class="text-center">
+                                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="height: 112px;width: 200px; margin-top:5px;margin-bottom:5px;" alt="Logo"/>
+                            </td>
+
+                            <td colspan="2" width="35%" style="margin-top:-15px; margin-bottom:-45px;text-align: right;">
+                                <strong>
+                                    <span class="arabic" style="padding-left:5px;font-size:20px;text-align: right;" t-field="company.arabic_name"/>
+                                </strong>
+                                <br/>
+                                <t t-if="company.arabic_street">
+                                    <span class="text-right arabic" style="padding-left:5px;" t-field="company.arabic_street"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.arabic_street2">
+                                    <span class="text-right arabic" style="padding-left:5px;" t-field="company.arabic_street2"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.arabic_city">
+                                    <span class="text-right arabic" style="padding-left:5px;" t-field="company.arabic_city"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.arabic_country">
+                                    <span class="text-right arabic" style="padding-left:5px;" t-field="company.arabic_country"/>
+                                    <br/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="6%" style="border:1pt solid grey;">‫‪<span class="text-right" style="padding-left:5px;"/>CR No. :
+                            </td>
+                            <td width="26%" style="border:1pt solid grey;">
+                                <span class="text-center arabic" style="padding-left:60px" t-field="company.company_id.company_registry"/>
+                                ‫‪
+                            </td>
+                            <td width="17%" style="border:1pt solid grey;"><span class="text-right arabic" style="padding-left:20px;">رقم السجل
+                                التجاري</span>‬
+                            </td>
+
+                            <!--<td width="2%" style="border-bottom:1pt solid grey;border-top:1pt solid grey;border-left:0pt;border-right:0pt;"/>  -->
+
+                            <td width="18%" colspan="2" style="border:1pt solid grey;">‪
+                                <span class="text-right" style="padding-left:40px;">
+                                    VAT‬‬ No.
+                                </span>
+                            </td>
+                            <td width="16%" style="border:1pt solid grey;">
+                                <span class="text-center arabic" style="padding-left:5px" t-field="company.company_id.vat"/>
+                                ‫‪
+                            </td>
+                            <td width="17%" style="border:1pt solid grey;"><span class="text-right arabic" style="padding-left:6px;">ضريبة القيمة
+                                المضافة</span>‬
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                </div>
+            </t>
+            <t t-else="">
+                <div class="header">
+                    <table t-if="company.delivery_header" style="border:none;width:100%;font-size:12px;" width="100%">
+                        <!--					<link rel="stylesheet" href="/enz_dynamic_design_standard/static/src/css/style.css"/>-->
+                        <style>
+                            .font{
+                            font-family:'traditional_arabic';;font-weight:100;font-size: 13px;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiBold';
+                            src: url('/enz_dynamic_design_standard/static/src/fonts/DroidKufi-Bold.ttf')
+                            format('truetype');
+                            font-weight: bold;
+                            font-style: normal;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiRegular';
+                            src: url('/enz_dynamic_design_standard/static/src/fonts/DroidKufi-Regular.ttf')
+                            format('truetype');
+                            font-weight: normal;
+                            font-style: normal;
+                            }
+
+                            .arabic{
+                            font-family:DroidArabicKufiRegular !important;
+                            }
+
+                        </style>
+                        <tr>
+                            <td width="100%" style="margin-top:-15px; margin-bottom:-45px; ">
+                                <img t-att-src="image_data_uri(company.delivery_header)" style="width:100%;height:80%; margin-top:5px;margin-bottom:5px;" alt="Header"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                </div>
+            </t>
+
+            <div t-attf-style="background-image: url({{ 'data:image/png;base64,%s' % company.delivery_background_image.decode('utf-8') if company.delivery_background_image else '/base/static/img/bg_background_template.jpg' }});" class="article o_report_layout_standard">
+                <t t-raw="0"/>
+            </div>
+
+            <t t-if="not company.delivery_footer">
+                <div class="footer o_background_footer">
+                    <div class="text-center" style="font-size:14px;">
+                        <ul class="list-inline">
+                            <li t-if="company.phone" class="list-inline-item">
+                                <i class="fa fa-phone" role="img" aria-label="Phone" title="Phone"/>
+                                <span t-field="company.phone"/>
+                            </li>
+                            <li t-if="company.email" class="list-inline-item">
+                                <i class="fa fa-at" role="img" aria-label="Email" title="Email"/>
+                                <span t-field="company.email"/>
+                            </li>
+                            <li t-if="company.website" class="list-inline-item">
+                                <i class="fa fa-globe" role="img" aria-label="Website" title="Website"/>
+                                <span t-field="company.website"/>
+                            </li>
+                            <li t-if="company.vat" class="list-inline-item">
+                                <i class="fa fa-building-o" role="img" aria-label="Fiscal number"/>
+                                <t t-esc="(company.country_id.vat_label or 'Tax ID').replace(' ','\N{NO-BREAK SPACE}')"/>
+                                :
+                                <span t-esc="company.vat.replace(' ','\N{NO-BREAK SPACE}')"/>
+                            </li>
+                        </ul>
+                        <div t-field="company.report_footer"/>
+                        <div t-if="report_type == 'pdf'" class="text-muted">
+                            Page:
+                            <span class="page"/>
+                            of
+                            <span class="topage"/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+            <t t-else="">
+                <div class="footer o_background_footer">
+                    <table t-if="company.delivery_footer" style="border:none;width:100%;font-size:12px;" width="100%">
+                        <!--					<link rel="stylesheet" href="/enz_dynamic_design_standard/static/src/css/style.css"/>-->
+                        <style>
+                            .font{
+                            font-family:'traditional_arabic';;font-weight:100;font-size: 13px;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiBold';
+                            src: url('/enz_dynamic_design_standard/static/src/fonts/DroidKufi-Bold.ttf')
+                            format('truetype');
+                            font-weight: bold;
+                            font-style: normal;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiRegular';
+                            src: url('/enz_dynamic_design_standard/static/src/fonts/DroidKufi-Regular.ttf')
+                            format('truetype');
+                            font-weight: normal;
+                            font-style: normal;
+                            }
+
+                            .arabic{
+                            font-family:DroidArabicKufiRegular !important;
+                            }
+
+                        </style>
+                        <tr>
+                            <td width="100%" style="margin-top:-15px; margin-bottom:-45px; ">
+                                <img t-att-src="image_data_uri(company.delivery_footer)" style="width:100%;height:80%; margin-top:5px;margin-bottom:5px;" alt="Footer"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+    <template id="enz_dynamic_design_standard.external_layout_seti">
+        <t t-if="o and 'branch_id' in o">
+            <t t-set="company" t-value="o.branch_id"/>
+        </t>
+        <t t-if="not o or not 'branch_id' in o">
+            <t t-set="company" t-value="company_branches"/>
+        </t>
+        <t t-if="o._name == 'sale.order'">
+            <t t-set="report_config" t-value="o.get_config_values()"/>
+            <t t-if="not report_config.get('header')">
+                <div class="header">
+                    <table style="border:1pt solid grey;width:100%;font-size:12px; margin-top:-10px;" width="100%">
+                        <!--					<link rel="stylesheet" href="/enz_dynamic_design/static/src/css/style.css"/>-->
+                        <style>
+                            .font{
+                            font-family:'traditional_arabic';;font-weight:100;font-size: 13px;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiBold';
+                            src: url('/enz_dynamic_design/static/src/fonts/DroidKufi-Bold.ttf') format('truetype');
+                            font-weight: bold;
+                            font-style: normal;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiRegular';
+                            src: url('/enz_dynamic_design/static/src/fonts/DroidKufi-Regular.ttf') format('truetype');
+                            font-weight: normal;
+                            font-style: normal;
+                            }
+
+                            .arabic{
+                            font-family:DroidArabicKufiRegular !important;
+                            }
+
+                        </style>
+                        <tr>
+                            <td colspan="2" width="35%" style="margin-top:-15px; margin-bottom:-45px; ">
+                                <strong>
+                                    <span style="padding-left:5px;font-size:20px;" t-field="company.name"/>
+                                </strong>
+                                <br/>
+                                <t t-if="company.street">
+                                    <span style="padding-left:5px;" t-field="company.street"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.street2">
+                                    <span style="padding-left:5px;" t-field="company.street2"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.city">
+                                    <span style="padding-left:5px;" t-field="company.city"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.country_id">
+                                    <span style="padding-left:5px;" t-field="company.country_id.name"/>
+                                    <br/>
+                                </t>
+                            </td>
+                            <br/>
+                            <td colspan="3" width="30%" class="text-center">
+                                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="height: 112px;width: 200px; margin-top:5px;margin-bottom:5px;" alt="Logo"/>
+                            </td>
+
+                            <td colspan="2" width="35%" style="margin-top:-15px; margin-bottom:-45px;text-align: right;">
+                                <strong>
+                                    <span class="arabic" style="padding-left:5px;font-size:20px;text-align: right;" t-field="company.arabic_name"/>
+                                </strong>
+                                <br/>
+                                <t t-if="company.arabic_street">
+                                    <span class="text-right arabic" style="padding-left:5px;" t-field="company.arabic_street"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.arabic_street2">
+                                    <span class="text-right arabic" style="padding-left:5px;" t-field="company.arabic_street2"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.arabic_city">
+                                    <span class="text-right arabic" style="padding-left:5px;" t-field="company.arabic_city"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.arabic_country">
+                                    <span class="text-right arabic" style="padding-left:5px;" t-field="company.arabic_country"/>
+                                    <br/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="6%" style="border:1pt solid grey;">‫‪<span class="text-right" style="padding-left:5px;"/>CR No. :
+                            </td>
+                            <td width="26%" style="border:1pt solid grey;">
+                                <span class="text-center arabic" style="padding-left:60px" t-field="company.company_id.company_registry"/>
+                                ‫‪
+                            </td>
+                            <td width="17%" style="border:1pt solid grey;"><span class="text-right arabic" style="padding-left:20px;">رقم السجل
+                                التجاري</span>‬
+                            </td>
+
+                            <!--<td width="2%" style="border-bottom:1pt solid grey;border-top:1pt solid grey;border-left:0pt;border-right:0pt;"/>  -->
+
+                            <td width="18%" colspan="2" style="border:1pt solid grey;">‪
+                                <span class="text-right" style="padding-left:40px;">
+                                    VAT‬‬ No.
+                                </span>
+                            </td>
+                            <td width="16%" style="border:1pt solid grey;">
+                                <span class="text-center arabic" style="padding-left:10px" t-field="company.company_id.company_registry"/>
+                                ‫‪
+                            </td>
+                            <td width="17%" style="border:1pt solid grey;"><span class="text-right arabic" style="padding-left:6px;">ضريبة القيمة
+                                المضافة</span>‬
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+            <t t-else="">
+                <div class="header">
+                    <table t-if="company.sale_header" style="border:none;width:100%;font-size:12px;" width="100%">
+                        <!--					<link rel="stylesheet" href="/enz_dynamic_design/static/src/css/style.css"/>-->
+                        <style>
+                            .font{
+                            font-family:'traditional_arabic';;font-weight:100;font-size: 13px;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiBold';
+                            src: url('/enz_dynamic_design/static/src/fonts/DroidKufi-Bold.ttf') format('truetype');
+                            font-weight: bold;
+                            font-style: normal;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiRegular';
+                            src: url('/enz_dynamic_design/static/src/fonts/DroidKufi-Regular.ttf') format('truetype');
+                            font-weight: normal;
+                            font-style: normal;
+                            }
+
+                            .arabic{
+                            font-family:DroidArabicKufiRegular !important;
+                            }
+
+                        </style>
+                        <tr>
+                            <td width="100%" style="margin-top:-15px; margin-bottom:-45px; ">
+                                <img t-att-src="image_data_uri(company.sale_header)" style="width:100%;height:80%; margin-top:5px;margin-bottom:5px;" alt="Header"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+
+            <div t-attf-style="background-image: url({{ 'data:image/png;base64,%s' % company.sale_background_image.decode('utf-8') if company.sale_background_image else '/base/static/img/bg_background_template.jpg' }});" class="article o_report_layout_standard">
+                <t t-raw="0"/>
+            </div>
+
+            <t t-if="not report_config.get('footer')">
+                <div class="footer o_background_footer">
+                    <div class="text-center" style="font-size:14px;">
+                        <ul class="list-inline">
+                            <li t-if="company.phone" class="list-inline-item">
+                                <i class="fa fa-phone" role="img" aria-label="Phone" title="Phone"/>
+                                <span t-field="company.phone"/>
+                            </li>
+                            <li t-if="company.email" class="list-inline-item">
+                                <i class="fa fa-at" role="img" aria-label="Email" title="Email"/>
+                                <span t-field="company.email"/>
+                            </li>
+                            <li t-if="company.website" class="list-inline-item">
+                                <i class="fa fa-globe" role="img" aria-label="Website" title="Website"/>
+                                <span t-field="company.website"/>
+                            </li>
+                            <li t-if="company.company_id.vat" class="list-inline-item">
+                                <i class="fa fa-building-o" role="img" aria-label="Fiscal number"/>
+                                <t t-esc="(company.country_id.vat_label or 'Tax ID').replace(' ','\N{NO-BREAK SPACE}')"/>
+                                :
+                                <span t-esc="company.company_id.vat.replace(' ','\N{NO-BREAK SPACE}')"/>
+                            </li>
+                        </ul>
+                        <div t-field="company.report_footer"/>
+                        <div t-if="report_type == 'pdf'" class="text-muted">
+                            Page:
+                            <span class="page"/>
+                            of
+                            <span class="topage"/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+            <t t-else="">
+                <div class="footer o_background_footer">
+                    <table t-if="company.sale_footer" style="border:none;width:100%;font-size:12px;" width="100%">
+                        <!--					<link rel="stylesheet" href="/enz_dynamic_design/static/src/css/style.css"/>-->
+                        <style>
+                            .font{
+                            font-family:'traditional_arabic';;font-weight:100;font-size: 13px;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiBold';
+                            src: url('/enz_dynamic_design/static/src/fonts/DroidKufi-Bold.ttf') format('truetype');
+                            font-weight: bold;
+                            font-style: normal;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiRegular';
+                            src: url('/enz_dynamic_design/static/src/fonts/DroidKufi-Regular.ttf') format('truetype');
+                            font-weight: normal;
+                            font-style: normal;
+                            }
+
+                            .arabic{
+                            font-family:DroidArabicKufiRegular !important;
+                            }
+
+                        </style>
+                        <tr>
+                            <td width="100%" style="margin-top:-15px; margin-bottom:-45px; ">
+                                <img t-att-src="image_data_uri(company.sale_footer)" style="width:100%;height:80%; margin-top:5px;margin-bottom:5px;" alt="Footer"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </t>
+        <t t-elif="o._name == 'purchase.order'">
+            <t t-set="report_config" t-value="o.get_config_values()"/>
+            <t t-if="not report_config.get('header')">
+                <div class="header">
+                    <table style="border:1pt solid grey;width:100%;font-size:12px; margin-top:-10px;" width="100%">
+                        <!--					<link rel="stylesheet" href="/enz_dynamic_design/static/src/css/style.css"/>-->
+                        <style>
+                            .font{
+                            font-family:'traditional_arabic';;font-weight:100;font-size: 13px;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiBold';
+                            src: url('/enz_dynamic_design/static/src/fonts/DroidKufi-Bold.ttf') format('truetype');
+                            font-weight: bold;
+                            font-style: normal;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiRegular';
+                            src: url('/enz_dynamic_design/static/src/fonts/DroidKufi-Regular.ttf') format('truetype');
+                            font-weight: normal;
+                            font-style: normal;
+                            }
+
+                            .arabic{
+                            font-family:DroidArabicKufiRegular !important;
+                            }
+
+                        </style>
+                        <tr>
+                            <td colspan="2" width="35%" style="margin-top:-15px; margin-bottom:-45px; ">
+                                <strong>
+                                    <span style="padding-left:5px;font-size:20px;" t-field="company.name"/>
+                                </strong>
+                                <br/>
+                                <t t-if="company.street">
+                                    <span style="padding-left:5px;" t-field="company.street"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.street2">
+                                    <span style="padding-left:5px;" t-field="company.street2"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.city">
+                                    <span style="padding-left:5px;" t-field="company.city"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.country_id">
+                                    <span style="padding-left:5px;" t-field="company.country_id.name"/>
+                                    <br/>
+                                </t>
+                            </td>
+                            <br/>
+                            <td colspan="3" width="30%" class="text-center">
+                                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="height: 112px;width: 200px; margin-top:5px;margin-bottom:5px;" alt="Logo"/>
+                            </td>
+
+                            <td colspan="2" width="35%" style="margin-top:-15px; margin-bottom:-45px;text-align: right;">
+                                <strong>
+                                    <span class="arabic" style="padding-left:5px;font-size:20px;text-align: right;" t-field="company.arabic_name"/>
+                                </strong>
+                                <br/>
+                                <t t-if="company.arabic_street">
+                                    <span class="text-right arabic" style="padding-left:5px;" t-field="company.arabic_street"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.arabic_street2">
+                                    <span class="text-right arabic" style="padding-left:5px;" t-field="company.arabic_street2"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.arabic_city">
+                                    <span class="text-right arabic" style="padding-left:5px;" t-field="company.arabic_city"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.arabic_country">
+                                    <span class="text-right arabic" style="padding-left:5px;" t-field="company.arabic_country"/>
+                                    <br/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="6%" style="border:1pt solid grey;">‫‪<span class="text-right" style="padding-left:5px;"/>CR No. :
+                            </td>
+                            <td width="26%" style="border:1pt solid grey;">
+                                <span class="text-center arabic" style="padding-left:60px" t-field="company.company_id.company_registry"/>
+                                ‫‪
+                            </td>
+                            <td width="17%" style="border:1pt solid grey;"><span class="text-right arabic" style="padding-left:20px;">رقم السجل
+                                التجاري</span>‬
+                            </td>
+
+                            <!--<td width="2%" style="border-bottom:1pt solid grey;border-top:1pt solid grey;border-left:0pt;border-right:0pt;"/>  -->
+
+                            <td width="18%" colspan="2" style="border:1pt solid grey;">‪
+                                <span class="text-right" style="padding-left:40px;">
+                                    VAT‬‬ No.
+                                </span>
+                            </td>
+                            <td width="16%" style="border:1pt solid grey;">
+                                <span class="text-center arabic" style="padding-left:5px" t-field="company.company_id.vat"/>
+                                ‫‪
+                            </td>
+                            <td width="17%" style="border:1pt solid grey;"><span class="text-right arabic" style="padding-left:6px;">ضريبة القيمة
+                                المضافة</span>‬
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+            <t t-else="">
+                <div class="header">
+                    <table t-if="company.purchase_header" style="border:none;width:100%;font-size:12px;" width="100%">
+                        <!--					<link rel="stylesheet" href="/enz_dynamic_design/static/src/css/style.css"/>-->
+                        <style>
+                            .font{
+                            font-family:'traditional_arabic';;font-weight:100;font-size: 13px;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiBold';
+                            src: url('/enz_dynamic_design/static/src/fonts/DroidKufi-Bold.ttf') format('truetype');
+                            font-weight: bold;
+                            font-style: normal;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiRegular';
+                            src: url('/enz_dynamic_design/static/src/fonts/DroidKufi-Regular.ttf') format('truetype');
+                            font-weight: normal;
+                            font-style: normal;
+                            }
+
+                            .arabic{
+                            font-family:DroidArabicKufiRegular !important;
+                            }
+
+                        </style>
+                        <tr>
+                            <td width="100%" style="margin-top:-15px; margin-bottom:-45px; ">
+                                <img t-att-src="image_data_uri(company.purchase_header)" style="width:100%;height:80%; margin-top:5px;margin-bottom:5px;" alt="Header"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+
+            <div t-attf-style="background-image: url({{ 'data:image/png;base64,%s' % company.purchase_background_image.decode('utf-8') if company.purchase_background_image else '/base/static/img/bg_background_template.jpg' }});" class="article o_report_layout_standard">
+                <t t-raw="0"/>
+            </div>
+
+            <t t-if="not report_config.get('footer')">
+                <div class="footer o_background_footer">
+                    <div class="text-center" style="font-size:14px;">
+                        <ul class="list-inline">
+                            <li t-if="company.phone" class="list-inline-item">
+                                <i class="fa fa-phone" role="img" aria-label="Phone" title="Phone"/>
+                                <span t-field="company.phone"/>
+                            </li>
+                            <li t-if="company.email" class="list-inline-item">
+                                <i class="fa fa-at" role="img" aria-label="Email" title="Email"/>
+                                <span t-field="company.email"/>
+                            </li>
+                            <li t-if="company.website" class="list-inline-item">
+                                <i class="fa fa-globe" role="img" aria-label="Website" title="Website"/>
+                                <span t-field="company.website"/>
+                            </li>
+                            <li t-if="company.company_id.vat" class="list-inline-item">
+                                <i class="fa fa-building-o" role="img" aria-label="Fiscal number"/>
+                                <t t-esc="(company.country_id.vat_label or 'Tax ID').replace(' ','\N{NO-BREAK SPACE}')"/>
+                                :
+                                <span t-esc="company.company_id.vat.replace(' ','\N{NO-BREAK SPACE}')"/>
+                            </li>
+                        </ul>
+                        <div t-field="company.report_footer"/>
+                        <div t-if="report_type == 'pdf'" class="text-muted">
+                            Page:
+                            <span class="page"/>
+                            of
+                            <span class="topage"/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+            <t t-else="">
+                <div class="footer o_background_footer">
+                    <table t-if="company.purchase_footer" style="border:none;width:100%;font-size:12px;" width="100%">
+                        <!--					<link rel="stylesheet" href="/enz_dynamic_design/static/src/css/style.css"/>-->
+                        <style>
+                            .font{
+                            font-family:'traditional_arabic';;font-weight:100;font-size: 13px;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiBold';
+                            src: url('/enz_dynamic_design/static/src/fonts/DroidKufi-Bold.ttf') format('truetype');
+                            font-weight: bold;
+                            font-style: normal;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiRegular';
+                            src: url('/enz_dynamic_design/static/src/fonts/DroidKufi-Regular.ttf') format('truetype');
+                            font-weight: normal;
+                            font-style: normal;
+                            }
+
+                            .arabic{
+                            font-family:DroidArabicKufiRegular !important;
+                            }
+
+                        </style>
+                        <tr>
+                            <td width="100%" style="margin-top:-15px; margin-bottom:-45px; ">
+                                <img t-att-src="image_data_uri(company.purchase_footer)" style="width:100%;height:80%; margin-top:5px;margin-bottom:5px;" alt="Footer"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </t>
+        <t t-elif="o._name == 'account.move'">
+            <t t-set="report_config" t-value="o.get_config_values()"/>
+            <t t-if="not report_config.get('header')">
+                <div class="header">
+                    <table style="border:1pt solid grey;width:100%;font-size:12px; margin-top:-10px;" width="100%">
+                        <!--					<link rel="stylesheet" href="/enz_dynamic_design/static/src/css/style.css"/>-->
+                        <style>
+                            .font{
+                            font-family:'traditional_arabic';;font-weight:100;font-size: 13px;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiBold';
+                            src: url('/enz_dynamic_design/static/src/fonts/DroidKufi-Bold.ttf') format('truetype');
+                            font-weight: bold;
+                            font-style: normal;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiRegular';
+                            src: url('/enz_dynamic_design/static/src/fonts/DroidKufi-Regular.ttf') format('truetype');
+                            font-weight: normal;
+                            font-style: normal;
+                            }
+
+                            .arabic{
+                            font-family:DroidArabicKufiRegular !important;
+                            }
+
+                        </style>
+                        <tr>
+                            <td colspan="2" width="35%" style="margin-top:-15px; margin-bottom:-45px; ">
+                                <strong>
+                                    <span style="padding-left:5px;font-size:20px;" t-field="company.name"/>
+                                </strong>
+                                <br/>
+                                <t t-if="company.street">
+                                    <span style="padding-left:5px;font-size:15px;" t-field="company.street"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.street2">
+                                    <span style="padding-left:5px;font-size:15px;" t-field="company.street2"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.city">
+                                    <span style="padding-left:5px;font-size:15px;" t-field="company.city"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.country_id">
+                                    <span style="padding-left:5px;font-size:15px;" t-field="company.country_id.name"/>
+                                    <br/>
+                                </t>
+                            </td>
+                            <br/>
+                            <td colspan="3" width="30%" class="text-center">
+                                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="height: 112px;width: 200px; margin-top:5px;margin-bottom:5px;" alt="Logo"/>
+                            </td>
+
+                            <td colspan="2" width="35%" style="margin-top:-15px; margin-bottom:-45px;text-align: right;">
+                                <strong>
+                                    <span class="arabic" style="padding-left:5px;font-size:20px;text-align: right;" t-field="company.arabic_name"/>
+                                </strong>
+                                <br/>
+                                <t t-if="company.arabic_street">
+                                    <span class="text-right arabic" style="padding-left:5px;font-size:15px;" t-field="company.arabic_street"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.arabic_street2">
+                                    <span class="text-right arabic" style="padding-left:5px;font-size:15px;" t-field="company.arabic_street2"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.arabic_city">
+                                    <span class="text-right arabic" style="padding-left:5px;font-size:15px;" t-field="company.arabic_city"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.arabic_country">
+                                    <span class="text-right arabic" style="padding-left:5px;font-size:15px;" t-field="company.arabic_country"/>
+                                    <br/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="6%" style="border:1pt solid grey;">‫‪<span class="text-right" style="padding-left:5px;"/>CR No. :
+                            </td>
+                            <td width="26%" style="border:1pt solid grey;">
+                                <span class="text-center arabic" style="padding-left:60px" t-field="company.company_id.company_registry"/>
+                                ‫‪
+                            </td>
+                            <td width="17%" style="border:1pt solid grey;"><span class="text-right arabic" style="padding-left:20px;">رقم السجل
+                                التجاري</span>‬
+                            </td>
+
+                            <!--<td width="2%" style="border-bottom:1pt solid grey;border-top:1pt solid grey;border-left:0pt;border-right:0pt;"/>  -->
+
+                            <td width="18%" colspan="2" style="border:1pt solid grey;">‪
+                                <span class="text-right" style="padding-left:40px;">
+                                    VAT‬‬ No.
+                                </span>
+                            </td>
+                            <td width="16%" style="border:1pt solid grey;">
+                                <span class="text-center arabic" style="padding-left:5px" t-field="company.company_id.vat"/>
+                                ‫‪
+                            </td>
+                            <td width="17%" style="border:1pt solid grey;"><span class="text-right arabic" style="padding-left:6px;">ضريبة القيمة
+                                المضافة</span>‬
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+            <t t-else="">
+                <div class="header">
+                    <table t-if="company.invoice_header" style="border:none;width:100%;font-size:12px;" width="100%">
+                        <!--					<link rel="stylesheet" href="/enz_dynamic_design/static/src/css/style.css"/>-->
+                        <style>
+                            .font{
+                            font-family:'traditional_arabic';;font-weight:100;font-size: 13px;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiBold';
+                            src: url('/enz_dynamic_design/static/src/fonts/DroidKufi-Bold.ttf') format('truetype');
+                            font-weight: bold;
+                            font-style: normal;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiRegular';
+                            src: url('/enz_dynamic_design/static/src/fonts/DroidKufi-Regular.ttf') format('truetype');
+                            font-weight: normal;
+                            font-style: normal;
+                            }
+
+                            .arabic{
+                            font-family:DroidArabicKufiRegular !important;
+                            }
+
+                        </style>
+                        <tr>
+                            <td width="100%" style="margin-top:-15px; margin-bottom:-45px; ">
+                                <img t-att-src="image_data_uri(company.invoice_header)" style="width:100%;height:80%; margin-top:5px;margin-bottom:5px;" alt="Header"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+
+            <div t-attf-style="background-image: url({{ 'data:image/png;base64,%s' % company.company_id.invoice_background_image.decode('utf-8') if company.company_id.invoice_background_image else '/base/static/img/bg_background_template.jpg' }});" class="article o_report_layout_standard">
+                <t t-raw="0"/>
+            </div>
+
+            <t t-if="not report_config.get('footer')">
+                <div class="footer o_background_footer">
+                    <div class="text-center" style="font-size:14px;">
+                        <ul class="list-inline">
+                            <li t-if="company.phone" class="list-inline-item">
+                                <i class="fa fa-phone" role="img" aria-label="Phone" title="Phone"/>
+                                <span t-field="company.phone"/>
+                            </li>
+                            <li t-if="company.email" class="list-inline-item">
+                                <i class="fa fa-at" role="img" aria-label="Email" title="Email"/>
+                                <span t-field="company.email"/>
+                            </li>
+                            <li t-if="company.website" class="list-inline-item">
+                                <i class="fa fa-globe" role="img" aria-label="Website" title="Website"/>
+                                <span t-field="company.website"/>
+                            </li>
+                            <!--<li t-if="company.company_id.vat" class="list-inline-item">-->
+                            <!--    <i class="fa fa-building-o" role="img" aria-label="Fiscal number"/>-->
+                            <!--    <t t-esc="(company.country_id.vat_label or 'Tax ID').replace(' ','\N{NO-BREAK SPACE}')"/>-->
+                            <!--    :-->
+                            <!--    <span t-esc="company.company_id.vat.replace(' ','\N{NO-BREAK SPACE}')"/>-->
+                            <!--</li>-->
+                        </ul>
+                        <div t-field="company.report_footer"/>
+                        <div class="row">
+                            <div class="col-10">
+                                <img t-if="company.company_id.footer_img_one" t-att-src="image_data_uri(company.company_id.footer_img_one)" style="height: 60px;width: 700px; margin-top:5px;margin-bottom:5px;padding-left:0px;" alt="Logo"/>
+                            </div>
+                            <!--<div class="col-8"/>-->
+                            <div class="col-2">
+                                <img t-if="company.footer_img" t-att-src="image_data_uri(company.footer_img)" style="height: 60px;width: 80px; margin-top:5px;margin-bottom:5px;padding-right:0px;" alt="Logo"/>
+                            </div>
+                        </div>
+                        <div t-if="report_type == 'pdf'" class="text-muted">
+                            Page:
+                            <span class="page"/>
+                            of
+                            <span class="topage"/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+            <t t-else="">
+                <div class="footer o_background_footer">
+                    <table t-if="company.company_id.invoice_footer" style="border:none;width:100%;font-size:12px;" width="100%">
+                        <!--					<link rel="stylesheet" href="/enz_dynamic_design/static/src/css/style.css"/>-->
+                        <style>
+                            .font{
+                            font-family:'traditional_arabic';;font-weight:100;font-size: 13px;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiBold';
+                            src: url('/enz_dynamic_design/static/src/fonts/DroidKufi-Bold.ttf') format('truetype');
+                            font-weight: bold;
+                            font-style: normal;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiRegular';
+                            src: url('/enz_dynamic_design/static/src/fonts/DroidKufi-Regular.ttf') format('truetype');
+                            font-weight: normal;
+                            font-style: normal;
+                            }
+
+                            .arabic{
+                            font-family:DroidArabicKufiRegular !important;
+                            }
+
+                        </style>
+                        <tr>
+                            <td width="100%" style="margin-top:-15px; margin-bottom:-45px; ">
+                                <img t-att-src="image_data_uri(company.company_id.invoice_footer)" style="width:100%;height:80%; margin-top:5px;margin-bottom:5px;" alt="Footer"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </t>
+        <t t-elif="o._name == 'stock.picking'">
+            <t t-if="not company.company_id.delivery_header">
+                <div class="header">
+                    <table style="border:1pt solid grey;width:100%;font-size:12px; margin-top:-10px;" width="100%">
+                        <!--					<link rel="stylesheet" href="/enz_dynamic_design/static/src/css/style.css"/>-->
+                        <style>
+                            .font{
+                            font-family:'traditional_arabic';;font-weight:100;font-size: 13px;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiBold';
+                            src: url('/enz_dynamic_design/static/src/fonts/DroidKufi-Bold.ttf') format('truetype');
+                            font-weight: bold;
+                            font-style: normal;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiRegular';
+                            src: url('/enz_dynamic_design/static/src/fonts/DroidKufi-Regular.ttf') format('truetype');
+                            font-weight: normal;
+                            font-style: normal;
+                            }
+
+                            .arabic{
+                            font-family:DroidArabicKufiRegular !important;
+                            }
+
+                        </style>
+                        <tr>
+                            <td colspan="2" width="35%" style="margin-top:-15px; margin-bottom:-45px; ">
+                                <strong>
+                                    <span style="padding-left:5px;font-size:20px;" t-field="company.name"/>
+                                </strong>
+                                <br/>
+                                <t t-if="company.street">
+                                    <span style="padding-left:5px;font-size:15px;" t-field="company.street"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.street2">
+                                    <span style="padding-left:5px;font-size:15px;" t-field="company.street2"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.city">
+                                    <span style="padding-left:5px;font-size:15px;" t-field="company.city"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.country_id">
+                                    <span style="padding-left:5px;font-size:15px;" t-field="company.country_id.name"/>
+                                    <br/>
+                                </t>
+                            </td>
+                            <br/>
+                            <td colspan="3" width="30%" class="text-center">
+                                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="height: 112px;width: 200px; margin-top:5px;margin-bottom:5px;" alt="Logo"/>
+                            </td>
+
+                            <td colspan="2" width="35%" style="margin-top:-15px; margin-bottom:-45px;text-align: right;">
+                                <strong>
+                                    <span class="arabic" style="padding-left:5px;font-size:20px;text-align: right;" t-field="company.arabic_name"/>
+                                </strong>
+                                <br/>
+                                <t t-if="company.arabic_street">
+                                    <span class="text-right arabic" style="padding-left:5px;font-size:15px;" t-field="company.arabic_street"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.arabic_street2">
+                                    <span class="text-right arabic" style="padding-left:5px;font-size:15px;" t-field="company.arabic_street2"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.arabic_city">
+                                    <span class="text-right arabic" style="padding-left:5px;font-size:15px;" t-field="company.arabic_city"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.arabic_country">
+                                    <span class="text-right arabic" style="padding-left:5px;font-size:15px;" t-field="company.arabic_country"/>
+                                    <br/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="6%" style="border:1pt solid grey;">‫‪<span class="text-right" style="padding-left:5px;"/>CR No. :
+                            </td>
+                            <td width="26%" style="border:1pt solid grey;">
+                                <span class="text-center arabic" style="padding-left:60px" t-field="company.company_id.company_registry"/>
+                                ‫‪
+                            </td>
+                            <td width="17%" style="border:1pt solid grey;"><span class="text-right arabic" style="padding-left:20px;">رقم السجل
+                                التجاري</span>‬
+                            </td>
+
+                            <!--<td width="2%" style="border-bottom:1pt solid grey;border-top:1pt solid grey;border-left:0pt;border-right:0pt;"/>  -->
+
+                            <td width="18%" colspan="2" style="border:1pt solid grey;">‪
+                                <span class="text-right" style="padding-left:40px;">
+                                    VAT‬‬ No.
+                                </span>
+                            </td>
+                            <td width="16%" style="border:1pt solid grey;">
+                                <span class="text-center arabic" style="padding-left:5px" t-field="company.company_id.vat"/>
+                                ‫‪
+                            </td>
+                            <td width="17%" style="border:1pt solid grey;"><span class="text-right arabic" style="padding-left:6px;">ضريبة القيمة
+                                المضافة</span>‬
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+            <t t-else="">
+                <div class="header">
+                    <table t-if="company.delivery_header" style="border:none;width:100%;font-size:12px;" width="100%">
+                        <!--					<link rel="stylesheet" href="/enz_dynamic_design/static/src/css/style.css"/>-->
+                        <style>
+                            .font{
+                            font-family:'traditional_arabic';;font-weight:100;font-size: 13px;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiBold';
+                            src: url('/enz_dynamic_design/static/src/fonts/DroidKufi-Bold.ttf') format('truetype');
+                            font-weight: bold;
+                            font-style: normal;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiRegular';
+                            src: url('/enz_dynamic_design/static/src/fonts/DroidKufi-Regular.ttf') format('truetype');
+                            font-weight: normal;
+                            font-style: normal;
+                            }
+
+                            .arabic{
+                            font-family:DroidArabicKufiRegular !important;
+                            }
+
+                        </style>
+                        <tr>
+                            <td width="100%" style="margin-top:-15px; margin-bottom:-45px; ">
+                                <img t-att-src="image_data_uri(company.delivery_header)" style="width:100%;height:80%; margin-top:5px;margin-bottom:5px;" alt="Header"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+
+            <div t-attf-style="background-image: url({{ 'data:image/png;base64,%s' % company.company_id.delivery_background_image.decode('utf-8') if company.company_id.delivery_background_image else '/base/static/img/bg_background_template.jpg' }});" class="article o_report_layout_standard">
+                <t t-raw="0"/>
+            </div>
+
+            <t t-if="not company.company_id.delivery_footer">
+                <div class="footer o_background_footer">
+                    <div class="text-center" style="font-size:14px;">
+                        <ul class="list-inline">
+                            <li t-if="company.phone" class="list-inline-item">
+                                <i class="fa fa-phone" role="img" aria-label="Phone" title="Phone"/>
+                                <span t-field="company.phone"/>
+                            </li>
+                            <li t-if="company.email" class="list-inline-item">
+                                <i class="fa fa-at" role="img" aria-label="Email" title="Email"/>
+                                <span t-field="company.email"/>
+                            </li>
+                            <li t-if="company.website" class="list-inline-item">
+                                <i class="fa fa-globe" role="img" aria-label="Website" title="Website"/>
+                                <span t-field="company.website"/>
+                            </li>
+                            <li t-if="company.company_id.vat" class="list-inline-item">
+                                <i class="fa fa-building-o" role="img" aria-label="Fiscal number"/>
+                                <t t-esc="(company.country_id.vat_label or 'Tax ID').replace(' ','\N{NO-BREAK SPACE}')"/>
+                                :
+                                <span t-esc="company.company_id.vat.replace(' ','\N{NO-BREAK SPACE}')"/>
+                            </li>
+                        </ul>
+                        <div t-field="company.report_footer"/>
+                        <div t-if="report_type == 'pdf'" class="text-muted">
+                            Page:
+                            <span class="page"/>
+                            of
+                            <span class="topage"/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+            <t t-else="">
+                <div class="footer o_background_footer">
+                    <table t-if="company.company_id.delivery_footer" style="border:none;width:100%;font-size:12px;" width="100%">
+                        <!--					<link rel="stylesheet" href="/enz_dynamic_design/static/src/css/style.css"/>-->
+                        <style>
+                            .font{
+                            font-family:'traditional_arabic';;font-weight:100;font-size: 13px;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiBold';
+                            src: url('/enz_dynamic_design/static/src/fonts/DroidKufi-Bold.ttf') format('truetype');
+                            font-weight: bold;
+                            font-style: normal;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiRegular';
+                            src: url('/enz_dynamic_design/static/src/fonts/DroidKufi-Regular.ttf') format('truetype');
+                            font-weight: normal;
+                            font-style: normal;
+                            }
+
+                            .arabic{
+                            font-family:DroidArabicKufiRegular !important;
+                            }
+
+                        </style>
+                        <tr>
+                            <td width="100%" style="margin-top:-15px; margin-bottom:-45px; ">
+                                <img t-att-src="image_data_uri(company.delivery_footer)" style="width:100%;height:80%; margin-top:5px;margin-bottom:5px;" alt="Footer"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+    <template id="enz_masar_jan_new.external_layout_seti">
+        <t t-if="o and 'branch_id' in o">
+            <t t-set="company" t-value="o.branch_id"/>
+        </t>
+        <t t-if="not o or not 'branch_id' in o">
+            <t t-set="company" t-value="company_branches"/>
+        </t>
+        <t t-elif="o._name == 'pro.forma.invoice'">
+            <t t-set="report_config" t-value="o.get_config_values()"/>
+            <t t-if="not report_config.get('header')">
+                <div class="header">
+                    <table style="border:1pt solid grey;width:100%;font-size:12px; margin-top:-10px;" width="100%">
+                        <!--					<link rel="stylesheet" href="/enz_dynamic_design/static/src/css/style.css"/>-->
+                        <style>
+                            .font{
+                            font-family:'traditional_arabic';;font-weight:100;font-size: 13px;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiBold';
+                            src: url('/enz_dynamic_design/static/src/fonts/DroidKufi-Bold.ttf') format('truetype');
+                            font-weight: bold;
+                            font-style: normal;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiRegular';
+                            src: url('/enz_dynamic_design/static/src/fonts/DroidKufi-Regular.ttf') format('truetype');
+                            font-weight: normal;
+                            font-style: normal;
+                            }
+
+                            .arabic{
+                            font-family:DroidArabicKufiRegular !important;
+                            }
+
+                        </style>
+                        <tr>
+                            <td colspan="2" width="35%" style="margin-top:-15px; margin-bottom:-45px; ">
+                                <strong>
+                                    <span style="padding-left:5px;font-size:20px;" t-field="company.name"/>
+                                </strong>
+                                <br/>
+                                <t t-if="company.street">
+                                    <span style="padding-left:5px;font-size:15px;" t-field="company.street"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.street2">
+                                    <span style="padding-left:5px;font-size:15px;" t-field="company.street2"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.city">
+                                    <span style="padding-left:5px;font-size:15px;" t-field="company.city"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.country_id">
+                                    <span style="padding-left:5px;font-size:15px;" t-field="company.country_id.name"/>
+                                    <br/>
+                                </t>
+                            </td>
+                            <br/>
+                            <td colspan="3" width="30%" class="text-center">
+                                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="height: 112px;width: 200px; margin-top:5px;margin-bottom:5px;" alt="Logo"/>
+                            </td>
+
+                            <td colspan="2" width="35%" style="margin-top:-15px; margin-bottom:-45px;text-align: right;">
+                                <strong>
+                                    <span class="arabic" style="padding-left:5px;font-size:20px;text-align: right;" t-field="company.arabic_name"/>
+                                </strong>
+                                <br/>
+                                <t t-if="company.arabic_street">
+                                    <span class="text-right arabic" style="padding-left:5px;font-size:15px;" t-field="company.arabic_street"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.arabic_street2">
+                                    <span class="text-right arabic" style="padding-left:5px;font-size:15px;" t-field="company.arabic_street2"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.arabic_city">
+                                    <span class="text-right arabic" style="padding-left:5px;font-size:15px;" t-field="company.arabic_city"/>
+                                    <br/>
+                                </t>
+                                <t t-if="company.arabic_country">
+                                    <span class="text-right arabic" style="padding-left:5px;font-size:15px;" t-field="company.arabic_country"/>
+                                    <br/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="6%" style="border:1pt solid grey;">‫‪<span class="text-right" style="padding-left:5px;"/>CR No. :
+                            </td>
+                            <td width="26%" style="border:1pt solid grey;">
+                                <span class="text-center arabic" style="padding-left:60px" t-field="company.company_id.company_registry"/>
+                                ‫‪
+                            </td>
+                            <td width="17%" style="border:1pt solid grey;"><span class="text-right arabic" style="padding-left:20px;">رقم السجل
+                                التجاري</span>‬
+                            </td>
+
+                            <!--<td width="2%" style="border-bottom:1pt solid grey;border-top:1pt solid grey;border-left:0pt;border-right:0pt;"/>  -->
+
+                            <td width="18%" colspan="2" style="border:1pt solid grey;">‪
+                                <span class="text-right" style="padding-left:40px;">
+                                    VAT‬‬ No.
+                                </span>
+                            </td>
+                            <td width="16%" style="border:1pt solid grey;">
+                                <span class="text-center arabic" style="padding-left:5px" t-field="company.company_id.vat"/>
+                                ‫‪
+                            </td>
+                            <td width="17%" style="border:1pt solid grey;"><span class="text-right arabic" style="padding-left:6px;">ضريبة القيمة
+                                المضافة</span>‬
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+            <t t-else="">
+                <div class="header">
+                    <table t-if="company.invoice_header" style="border:none;width:100%;font-size:12px;" width="100%">
+                        <!--					<link rel="stylesheet" href="/enz_dynamic_design/static/src/css/style.css"/>-->
+                        <style>
+                            .font{
+                            font-family:'traditional_arabic';;font-weight:100;font-size: 13px;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiBold';
+                            src: url('/enz_dynamic_design/static/src/fonts/DroidKufi-Bold.ttf') format('truetype');
+                            font-weight: bold;
+                            font-style: normal;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiRegular';
+                            src: url('/enz_dynamic_design/static/src/fonts/DroidKufi-Regular.ttf') format('truetype');
+                            font-weight: normal;
+                            font-style: normal;
+                            }
+
+                            .arabic{
+                            font-family:DroidArabicKufiRegular !important;
+                            }
+
+                        </style>
+                        <tr>
+                            <td width="100%" style="margin-top:-15px; margin-bottom:-45px; ">
+                                <img t-att-src="image_data_uri(company.invoice_header)" style="width:100%;height:80%; margin-top:5px;margin-bottom:5px;" alt="Header"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+
+            <div t-attf-style="background-image: url({{ 'data:image/png;base64,%s' % company.company_id.invoice_background_image.decode('utf-8') if company.company_id.invoice_background_image else '/base/static/img/bg_background_template.jpg' }});" class="article o_report_layout_standard">
+                <t t-raw="0"/>
+            </div>
+
+            <t t-if="not report_config.get('footer')">
+                <div class="footer o_background_footer">
+                    <div class="text-center" style="font-size:14px;">
+                        <ul class="list-inline">
+                            <li t-if="company.phone" class="list-inline-item">
+                                <i class="fa fa-phone" role="img" aria-label="Phone" title="Phone"/>
+                                <span t-field="company.phone"/>
+                            </li>
+                            <li t-if="company.email" class="list-inline-item">
+                                <i class="fa fa-at" role="img" aria-label="Email" title="Email"/>
+                                <span t-field="company.email"/>
+                            </li>
+                            <li t-if="company.website" class="list-inline-item">
+                                <i class="fa fa-globe" role="img" aria-label="Website" title="Website"/>
+                                <span t-field="company.website"/>
+                            </li>
+                            <!--<li t-if="company.company_id.vat" class="list-inline-item">-->
+                            <!--    <i class="fa fa-building-o" role="img" aria-label="Fiscal number"/>-->
+                            <!--    <t t-esc="(company.country_id.vat_label or 'Tax ID').replace(' ','\N{NO-BREAK SPACE}')"/>-->
+                            <!--    :-->
+                            <!--    <span t-esc="company.company_id.vat.replace(' ','\N{NO-BREAK SPACE}')"/>-->
+                            <!--</li>-->
+                        </ul>
+                        <div t-field="company.report_footer"/>
+                        <div class="row">
+                            <div class="col-10">
+                                <img t-if="company.company_id.footer_img_one" t-att-src="image_data_uri(company.company_id.footer_img_one)" style="height: 60px;width: 700px; margin-top:5px;margin-bottom:5px;padding-left:0px;" alt="Logo"/>
+                            </div>
+                            <!--<div class="col-8"/>-->
+                            <div class="col-2">
+                                <img t-if="company.footer_img" t-att-src="image_data_uri(company.footer_img)" style="height: 60px;width: 80px; margin-top:5px;margin-bottom:5px;padding-right:0px;" alt="Logo"/>
+                            </div>
+                        </div>
+                        <div t-if="report_type == 'pdf'" class="text-muted">
+                            Page:
+                            <span class="page"/>
+                            of
+                            <span class="topage"/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+            <t t-else="">
+                <div class="footer o_background_footer">
+                    <table t-if="company.company_id.invoice_footer" style="border:none;width:100%;font-size:12px;" width="100%">
+                        <!--					<link rel="stylesheet" href="/enz_dynamic_design/static/src/css/style.css"/>-->
+                        <style>
+                            .font{
+                            font-family:'traditional_arabic';;font-weight:100;font-size: 13px;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiBold';
+                            src: url('/enz_dynamic_design/static/src/fonts/DroidKufi-Bold.ttf') format('truetype');
+                            font-weight: bold;
+                            font-style: normal;
+                            }
+
+                            @font-face {
+                            font-family: 'DroidArabicKufiRegular';
+                            src: url('/enz_dynamic_design/static/src/fonts/DroidKufi-Regular.ttf') format('truetype');
+                            font-weight: normal;
+                            font-style: normal;
+                            }
+
+                            .arabic{
+                            font-family:DroidArabicKufiRegular !important;
+                            }
+
+                        </style>
+                        <tr>
+                            <td width="100%" style="margin-top:-15px; margin-bottom:-45px; ">
+                                <img t-att-src="image_data_uri(company.company_id.invoice_footer)" style="width:100%;height:80%; margin-top:5px;margin-bottom:5px;" alt="Footer"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
